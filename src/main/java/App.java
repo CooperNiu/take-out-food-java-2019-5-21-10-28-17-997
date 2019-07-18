@@ -13,8 +13,77 @@ public class App {
     }
 
     public String bestCharge(List<String> inputs) {
-        //TODO: write code here
+       StringBuffer sb = new StringBuffer();
+     	int money = 0,total = 0;
+     	int i = 0, j = 0;
+     	sb.append("============= 订餐明细 =============\n");
+     	for(String input : inputs){
+        	String[] str = input.split("x");
+        	String name = str[0].trim();
+        	String count = str[1].trim();
+    		if(name.equals("ITEM0001")){
+    			sb.append("黄焖鸡 x " + count + " = " + 18*Integer.parseInt(count) +"元\n");
+    			money += 18*Integer.parseInt(count); 
+    			i = 9 * Integer.parseInt(count);
+    		}else if(name.equals("ITEM0013")){
+    			sb.append("肉夹馍 x " + count + " = " + 6*Integer.parseInt(count) +"元\n");	
+    			money += 6*Integer.parseInt(count);
+    		}else if(name.equals("ITEM0022")){
+    			sb.append("凉皮 x " + count + " = " + 8*Integer.parseInt(count) +"元\n");	
+    			money += 8*Integer.parseInt(count);
+    			j = 4 * Integer.parseInt(count);
+    		}
+        }
+        sb.append("-----------------------------------\n");
+        if(money < 30 && i == 0 && j == 0){
+        	sb.append("总计：" + money + "元\n");
+        }else if(money < 30 && i != 0 && j != 0){
+        	total = money - (i + j);
+        	sb.append("使用优惠:\n指定菜品半价(黄焖鸡，凉皮)，省" + (i + j)+ "元\n");
+        	sb.append("-----------------------------------\n");
+        	sb.append("总计：" + total + "元\n");
+        }else if(money < 30 && i != 0 && j == 0){
+        	total = money - i;
+        	sb.append("使用优惠:\n指定菜品半价(黄焖鸡)，省" + i + "元\n");
+        	sb.append("-----------------------------------\n");
+        	sb.append("总计：" + total + "元\n");
+        }else if(money < 30 && i == 0 && j != 0){
+        	total = money - j;
+        	sb.append("使用优惠:\n指定菜品半价(凉皮)，省" + j + "元\n");
+        	sb.append("-----------------------------------\n");
+        	sb.append("总计：" + total + "元\n");
+        }else if(money >= 30 && i == 0 && j == 0 ){
+        	total = money - 6;
+        	sb.append("使用优惠:\n满30减6元，省6元\n");
+        	sb.append("-----------------------------------\n");
+        	sb.append("总计：" + total + "元\n");
+        }else if(money >= 30 && i == 0 && j != 0){
+        	if( j <= 6){
+        		total = money - 6;
+            	sb.append("使用优惠:\n满30减6元，省6元\n");
+            	sb.append("-----------------------------------\n");
+            	sb.append("总计：" + total + "元\n");
+        	}else{
+        		total = money - j;
+            	sb.append("使用优惠:\n指定菜品半价(凉皮)，省" + j + "元\n");
+            	sb.append("-----------------------------------\n");
+            	sb.append("总计：" + total + "元\n");
+        	}
+        }else if(money >= 30 && i != 0 && j != 0){
+        	if(i + j > 6){
+        		total = money - (i + j);
+            	sb.append("使用优惠:\n指定菜品半价(黄焖鸡，凉皮)，省" + (i + j)+ "元\n");
+            	sb.append("-----------------------------------\n");
+            	sb.append("总计：" + total + "元\n");
+        	}else{
+        		total = money - 6;
+            	sb.append("使用优惠:\n满30减6元，省6元\n");
+            	sb.append("-----------------------------------\n");
+            	sb.append("总计：" + total + "元\n");
+        	}
+        }
+        sb.append("===================================");
+        return  sb.toString();
 
-        return null;
     }
 }
